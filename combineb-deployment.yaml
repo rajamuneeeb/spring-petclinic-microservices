@@ -1,0 +1,219 @@
+---
+# config-server-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      containers:
+        - name: config-server
+          image: springcommunity/spring-petclinic-config-server
+          ports:
+            - containerPort: 8888
+          resources:
+            limits:
+              memory: 512M
+---
+# discovery-server-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-server
+  template:
+    metadata:
+      labels:
+        app: discovery-server
+    spec:
+      containers:
+        - name: discovery-server
+          image: springcommunity/spring-petclinic-discovery-server
+          ports:
+            - containerPort: 8761
+          resources:
+            limits:
+              memory: 512M
+---
+# customers-service-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customers-service
+  template:
+    metadata:
+      labels:
+        app: customers-service
+    spec:
+      containers:
+        - name: customers-service
+          image: springcommunity/spring-petclinic-customers-service
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: 512M
+---
+# visits-service-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visits-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visits-service
+  template:
+    metadata:
+      labels:
+        app: visits-service
+    spec:
+      containers:
+        - name: visits-service
+          image: springcommunity/spring-petclinic-visits-service
+          ports:
+            - containerPort: 8082
+          resources:
+            limits:
+              memory: 512M
+---
+# vets-service-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vets-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vets-service
+  template:
+    metadata:
+      labels:
+        app: vets-service
+    spec:
+      containers:
+        - name: vets-service
+          image: springcommunity/spring-petclinic-vets-service
+          ports:
+            - containerPort: 8083
+          resources:
+            limits:
+              memory: 512M
+---
+# api-gateway-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: springcommunity/spring-petclinic-api-gateway
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 512M
+---
+# tracing-server-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracing-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracing-server
+  template:
+    metadata:
+      labels:
+        app: tracing-server
+    spec:
+      containers:
+        - name: tracing-server
+          image: openzipkin/zipkin
+          ports:
+            - containerPort: 9411
+          resources:
+            limits:
+              memory: 512M
+          env:
+            - name: JAVA_OPTS
+              value: "-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom"
+---
+# admin-server-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-server
+  template:
+    metadata:
+      labels:
+        app: admin-server
+    spec:
+      containers:
+        - name: admin-server
+          image: springcommunity/spring-petclinic-admin-server
+          ports:
+            - containerPort: 9090
+          resources:
+            limits:
+              memory: 512M
+---
+# grafana-server-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-server
+  template:
+    metadata:
+      labels:
+        app: grafana-server
+    spec:
+      containers:
+        - name: grafana-server
+          image: grafana/grafana
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: 512M
